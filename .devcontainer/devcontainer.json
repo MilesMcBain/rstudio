@@ -3,7 +3,7 @@
   "dockerComposeFile": "docker-compose-vscode.yml",
   "service": "vscode",
   "shutdownAction": "stopCompose",
-  "workspaceFolder": "/workspaces/rstudio",
+  "workspaceFolder": "/userhome/repos/rstudio",
 
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash",
