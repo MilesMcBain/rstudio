@@ -247,6 +247,8 @@ public abstract class
    public abstract AppCommand layoutZoomConsole();
    public abstract AppCommand layoutZoomConsolePane();
    public abstract AppCommand activateConsolePanePane();
+   public abstract AppCommand scrollConsoleDown();
+   public abstract AppCommand scrollConsoleUp();
 
    // Files
    public abstract AppCommand newFolder();

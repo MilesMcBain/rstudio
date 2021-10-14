@@ -18,6 +18,7 @@ import org.rstudio.core.client.ConsoleOutputWriter;
 import org.rstudio.core.client.jsonrpc.RpcObjectList;
 import org.rstudio.core.client.widget.CanFocus;
 import org.rstudio.studio.client.workbench.model.ConsoleAction;
+import org.rstudio.studio.client.workbench.views.console.events.ScrollConsoleEvent;
 import org.rstudio.studio.client.workbench.views.console.shell.editor.InputEditorDisplay;
 
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
@@ -59,4 +60,6 @@ public interface ShellDisplay extends ShellOutputWriter,
    
    void enableLiveReporting();
    void clearLiveRegion();
+
+   void scrollConsole(ScrollConsoleEvent.ScrollDirection direction);
 }

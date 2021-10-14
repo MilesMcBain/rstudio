@@ -39,6 +39,7 @@ import org.rstudio.studio.client.workbench.model.ConsoleAction;
 import org.rstudio.studio.client.workbench.prefs.model.UserPrefs;
 import org.rstudio.studio.client.workbench.views.console.ConsoleResources;
 import org.rstudio.studio.client.workbench.views.console.events.RunCommandWithDebugEvent;
+import org.rstudio.studio.client.workbench.views.console.events.ScrollConsoleEvent;
 import org.rstudio.studio.client.workbench.views.console.shell.editor.InputEditorDisplay;
 import org.rstudio.studio.client.workbench.views.source.editors.text.AceEditor;
 import org.rstudio.studio.client.workbench.views.source.editors.text.AceEditor.NewLineMode;
@@ -918,6 +919,18 @@ public class ShellWidget extends Composite implements ShellDisplay,
    {
       if (liveRegion_ != null)
          liveRegion_.clearLiveRegion();
+   }
+
+   public void scrollConsole(ScrollConsoleEvent.ScrollDirection direction)
+   {
+     if (direction == ScrollConsoleEvent.ScrollDirection.Up)
+     {
+        input_.scrollToLine(input_.getFirstVisibleRow() - 1, false);
+     }
+     else
+     {
+        input_.scrollToLine(input_.getLastVisibleRow() + 1, false);
+     }
    }
 
    private boolean isAnnouncementEnabled(String announcement)

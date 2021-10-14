@@ -90,7 +90,8 @@ public class Shell implements ConsoleHistoryAddedEvent.Handler,
                               RunCommandWithDebugEvent.Handler,
                               UnhandledErrorEvent.Handler,
                               SuppressNextShellFocusEvent.Handler,
-                              RestartStatusEvent.Handler
+                              RestartStatusEvent.Handler,
+                              ScrollConsoleEvent.Handler
                               
 {
    static interface Binder extends CommandBinder<Commands, Shell>
@@ -171,6 +172,7 @@ public class Shell implements ConsoleHistoryAddedEvent.Handler,
       eventBus.addHandler(ConsoleWritePromptEvent.TYPE, this);
       eventBus.addHandler(ConsoleWriteInputEvent.TYPE, this);
       eventBus.addHandler(ConsolePromptEvent.TYPE, this);
+      eventBus.addHandler(ScrollConsoleEvent.TYPE, this);
       eventBus.addHandler(ConsoleResetHistoryEvent.TYPE, this);
       eventBus.addHandler(ConsoleRestartRCompletedEvent.TYPE, this);
       eventBus.addHandler(ConsoleExecutePendingInputEvent.TYPE, this);
@@ -834,6 +836,11 @@ public class Shell implements ConsoleHistoryAddedEvent.Handler,
       {
          view_.enableLiveReporting();
       }
+   }
+
+   public void onScrollConsole(ScrollConsoleEvent event)
+   {
+      view_.scrollConsole(event.getDirection());
    }
    
 
