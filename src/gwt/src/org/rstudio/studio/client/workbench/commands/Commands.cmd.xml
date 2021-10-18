@@ -4185,4 +4185,14 @@ well as menu structures (for main menu and popup menus).
         label="Toggle Memory Usage Display in Environment Pane"
         menuLabel="_Show Current Memory Usage"
         checkable="true" />
+
+
+   <cmd id="scrollConsoleUp"
+        label="Scroll the console up"
+        menuLabel="Scroll the console up"
+        context="editor"/>
+   <cmd id="scrollConsoleDown"
+        label="Scroll the console down"
+        menuLabel="Scroll the console down"
+        context="editor"/>
 </commands>

@@ -54,9 +54,7 @@ How to pass an event to the AceEditor for the console from the source editor tri
 * Define abstract app commands in [Commands](../src/gwt/src/org/rstudio/studio/client/workbench/commands/Commands.java):
   - scrollConsoleUp()
   - scrollConsoleDown()
-
-TODO:
 * Hook up commands to implementations
   - This is a bit special, described in [CommandBinder](../src/gwt/src/org/rstudio/core/client/command/CommandBinder.java)
-  - To find the right binder implementation look for the other onThing methods relating to the console commands?
+  - Added two command handlers, onScrollConsoleUp() and onScrollConsoleDown() to [TextInputTarget](../src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/TextEditingTarget.java)
 * Declare commands in Commands.cmd.xml

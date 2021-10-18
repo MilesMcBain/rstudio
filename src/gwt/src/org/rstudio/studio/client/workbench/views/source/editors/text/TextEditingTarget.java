@@ -135,7 +135,9 @@ import org.rstudio.studio.client.workbench.model.SessionInfo;
 import org.rstudio.studio.client.workbench.prefs.model.UserPrefs;
 import org.rstudio.studio.client.workbench.prefs.model.UserState;
 import org.rstudio.studio.client.workbench.ui.FontSizeManager;
+import org.rstudio.studio.client.workbench.views.console.events.ScrollConsoleEvent;
 import org.rstudio.studio.client.workbench.views.console.events.SendToConsoleEvent;
+import org.rstudio.studio.client.workbench.views.console.events.ScrollConsoleEvent.ScrollDirection;
 import org.rstudio.studio.client.workbench.views.console.shell.editor.InputEditorPosition;
 import org.rstudio.studio.client.workbench.views.console.shell.editor.InputEditorSelection;
 import org.rstudio.studio.client.workbench.views.files.events.FileChangeEvent;
@@ -1100,6 +1102,18 @@ public class TextEditingTarget implements
          commands_.activateConsole().execute();
       else
          commands_.activateSource().execute();
+   }
+
+   @Handler
+   void onScrollConsoleUp()
+   {
+      events_.fireEvent(new ScrollConsoleEvent(ScrollDirection.Up));
+   }
+
+   @Handler
+   void onScrollConsoleDown()
+   {
+      events_.fireEvent(new ScrollConsoleEvent(ScrollDirection.Down));
    }
 
    @Handler
@@ -8898,6 +8912,8 @@ public class TextEditingTarget implements
       }
 
       abstract void doExtract(final JsArrayString response);
+
+
    }
 
    private static final String PROPERTY_CURSOR_POSITION = "cursorPosition";
