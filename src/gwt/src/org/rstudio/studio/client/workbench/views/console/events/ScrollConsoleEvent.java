@@ -1,10 +1,8 @@
 package org.rstudio.studio.client.workbench.views.console.events;
 
 import com.google.gwt.event.shared.EventHandler;
-import org.rstudio.core.client.js.JavaScriptSerializable;
 import org.rstudio.studio.client.application.events.CrossWindowEvent;
 
-@JavaScriptSerializable
 public class ScrollConsoleEvent extends CrossWindowEvent<ScrollConsoleEvent.Handler> 
 {
   
