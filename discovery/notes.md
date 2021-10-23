@@ -59,3 +59,28 @@ How to pass an event to the AceEditor for the console from the source editor tri
   - Added two command handlers, onScrollConsoleUp() and onScrollConsoleDown() to [TextInputTarget](../src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/TextEditingTarget.java)
     - these fire the scrollConsoleEvent on the event bus
 * Declare commands in Commands.cmd.xml
+
+# Trying to build RStudio desktop
+
+## Cmake
+
+cmake .. -DRSTUDIO_TARGET=Desktop -DRSTUDIO_PACKAGE_BUILD=1 -DCMAKE_BUILD_TYPE=Debug
+
+## Java build issues
+
+I couldn't build with dependencies installed from [install-dependencies-focal](../dependencies/linux/install-dependencies-focal). There was an issue relating to jar files being imported in multiple places in the source, e.g. :
+
+```java
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+```
+Trips up the compiler errors: "The package org.w3c.dom is accessible from more than one module <unnamed> javax.xml" etc.
+
+In [CommandBundleGenerator](../src/gwt/src/org/rstudio/core/rebind/command/CommandBundleGenerator.java). Some Googling suggests this due to changes in Java 9+.
+
+I noticed the docker file handles the Java deps slightly differently. It installs the `openjdk-8-jdk` packages as well as `openjdk-11-jdk` but seems to set the default java to 8 with: `update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java`.
