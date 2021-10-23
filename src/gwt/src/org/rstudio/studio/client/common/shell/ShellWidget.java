@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.rstudio.core.client.ConsoleOutputWriter;
+import org.rstudio.core.client.Debug;
 import org.rstudio.core.client.ElementIds;
 import org.rstudio.core.client.StringUtil;
 import org.rstudio.core.client.TimeBufferedCommand;
@@ -43,7 +44,9 @@ import org.rstudio.studio.client.workbench.views.console.events.ScrollConsoleEve
 import org.rstudio.studio.client.workbench.views.console.shell.editor.InputEditorDisplay;
 import org.rstudio.studio.client.workbench.views.source.editors.text.AceEditor;
 import org.rstudio.studio.client.workbench.views.source.editors.text.AceEditor.NewLineMode;
+import org.rstudio.studio.client.workbench.views.source.editors.text.ace.Position;
 import org.rstudio.studio.client.workbench.views.source.editors.text.ace.Renderer;
+import org.rstudio.studio.client.workbench.views.source.editors.text.ace.Renderer.ScreenCoordinates;
 import org.rstudio.studio.client.workbench.views.source.editors.text.events.CursorChangedEvent;
 import org.rstudio.studio.client.workbench.views.source.editors.text.events.PasteEvent;
 import org.rstudio.studio.client.workbench.views.source.editors.text.events.RenderFinishedEvent;
@@ -923,13 +926,26 @@ public class ShellWidget extends Composite implements ShellDisplay,
 
    public void scrollConsole(ScrollConsoleEvent.ScrollDirection direction)
    {
+
+     Debug.logToRConsole("ShellWidget::scrollConsole()"); 
      if (direction == ScrollConsoleEvent.ScrollDirection.Up)
      {
-        input_.scrollToLine(input_.getFirstVisibleRow() - 1, false);
+
+        Debug.logToRConsole("ShellWidget::scrollConsole(Up)"); 
+        ScreenCoordinates targetY = input_.documentPositionToScreenCoordinates(
+          Position.create(input_.getFirstVisibleRow() - 2, 0)
+        );
+        input_.scrollToY(targetY.getPageY(), 0);
      }
      else
      {
-        input_.scrollToLine(input_.getLastVisibleRow() + 1, false);
+        ScreenCoordinates targetY = input_.documentPositionToScreenCoordinates(
+          Position.create(input_.getLastVisibleRow() + 2, 0)
+          // need to not overshoot end?
+        );
+        input_.scrollToY(targetY.getPageY(), 0);
+
+        
      }
    }
 
