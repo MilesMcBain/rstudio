@@ -1107,16 +1107,12 @@ public class TextEditingTarget implements
    @Handler
    void onScrollConsoleUp()
    {
-
-      Debug.logToRConsole("TextEditingTarget::onScrollConsoleUp()");; 
       events_.fireEvent(new ScrollConsoleEvent(ScrollDirection.Up));
    }
 
    @Handler
    void onScrollConsoleDown()
    {
-
-      Debug.logToRConsole("TextEditingTarget::onScrollConsoleDown()");; 
       events_.fireEvent(new ScrollConsoleEvent(ScrollDirection.Down));
    }
 

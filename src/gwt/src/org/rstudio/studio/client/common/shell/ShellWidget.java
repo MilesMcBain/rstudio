@@ -927,25 +927,21 @@ public class ShellWidget extends Composite implements ShellDisplay,
    public void scrollConsole(ScrollConsoleEvent.ScrollDirection direction)
    {
 
-     Debug.logToRConsole("ShellWidget::scrollConsole()"); 
      if (direction == ScrollConsoleEvent.ScrollDirection.Up)
      {
+       int newScrollTop =
+                        scrollPanel_.getVerticalScrollPosition() -
+                        scrollPanel_.getOffsetHeight();
 
-        Debug.logToRConsole("ShellWidget::scrollConsole(Up)"); 
-        ScreenCoordinates targetY = input_.documentPositionToScreenCoordinates(
-          Position.create(input_.getFirstVisibleRow() - 2, 0)
-        );
-        input_.scrollToY(targetY.getPageY(), 0);
+        scrollPanel_.setVerticalScrollPosition(newScrollTop);
      }
      else
      {
-        ScreenCoordinates targetY = input_.documentPositionToScreenCoordinates(
-          Position.create(input_.getLastVisibleRow() + 2, 0)
-          // need to not overshoot end?
-        );
-        input_.scrollToY(targetY.getPageY(), 0);
+       int newScrollTop =
+                        scrollPanel_.getVerticalScrollPosition() +
+                        scrollPanel_.getOffsetHeight();
 
-        
+        scrollPanel_.setVerticalScrollPosition(newScrollTop);
      }
    }
 

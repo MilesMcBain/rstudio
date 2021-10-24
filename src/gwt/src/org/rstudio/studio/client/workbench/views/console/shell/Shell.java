@@ -841,7 +841,6 @@ public class Shell implements ConsoleHistoryAddedEvent.Handler,
 
    public void onScrollConsole(ScrollConsoleEvent event)
    {
-      Debug.logToRConsole("Shell::onScrollConsole()");; 
       view_.scrollConsole(event.getDirection());
    }
    
