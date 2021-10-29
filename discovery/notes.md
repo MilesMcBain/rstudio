@@ -49,8 +49,7 @@ How to pass an event to the AceEditor for the console from the source editor tri
 * Declare scrollConole() in [ShellDisplay](../src/gwt/src/org/rstudio/studio/client/common/shell/ShellDisplay.java) 
   - This means the [ShellWidget](../src/gwt/src/org/rstudio/studio/client/common/shell/ShellWidget.java) must define scrollConsole()
 * Define scrollConsole() in [ShellWidget]
-  - Uses some calls on the input_ [DocDisplay](../src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/DocDisplay.java) ([AceEditor]) to implement the method.
-  - could also push down some methods for scrollUp(), scrollDown() into the [DocDisplay] interface and implement in [AceEditor] if the methods used don't do what I think they do.
+  - Uses some calls on the `scroll_panel_` [ScrollPanel] to implement the scroll.
 * Define abstract app commands in [Commands](../src/gwt/src/org/rstudio/studio/client/workbench/commands/Commands.java):
   - scrollConsoleUp()
   - scrollConsoleDown()
@@ -59,6 +58,22 @@ How to pass an event to the AceEditor for the console from the source editor tri
   - Added two command handlers, onScrollConsoleUp() and onScrollConsoleDown() to [TextInputTarget](../src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/TextEditingTarget.java)
     - these fire the scrollConsoleEvent on the event bus
 * Declare commands in Commands.cmd.xml
+
+# Incorporating the terminal
+
+The case where the user has the terminal focused needs to be handled. Maybe the terminal could capture the same event as the console. Each only scrolls if it determines it is visible/focused?
+
+Hunting for terminal classes:
+
+* A likely method is to do scroll is scrollLines() on [XTermNative](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/xterm/XTermNative.java)
+* The [XTermWidget](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/xterm/XTermWidget.java) contains the [XtermNative]
+* The [TerminalSession](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/TerminalSession.java) extends [XTermWidget]
+* The [TerminalPane](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/TerminalPane.java) manages zero or more [TerminalSession]
+* This Display class of [TerminalTabPresenter](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/TerminalTabPresenter.java) is a [TerminalPane]
+* [TerminalTab](../src/gwt/src/org/rstudio/studio/client/workbench/views/terminal/TerminalTab.java) extends the [TerminalTabPresenter]
+
+
+The Looks like the scroll event needs to be captured in the [TerminalTab] with an implementation for scroll somewhere down the tree.
 
 # Trying to build RStudio desktop
 
